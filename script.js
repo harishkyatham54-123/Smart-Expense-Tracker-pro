@@ -36,6 +36,7 @@ document.getElementById("addBtn");
 const themeBtn =
 document.getElementById("themeBtn");
 
+
 function saveData() {
 
     localStorage.setItem(
@@ -44,6 +45,7 @@ function saveData() {
     );
 
 }
+
 
 function addTransaction() {
 
@@ -57,21 +59,27 @@ function addTransaction() {
     typeInput.value;
 
     if(title === "" || amount <= 0){
+
         alert("Enter valid details");
+
         return;
     }
 
     const transaction = {
+
         title,
         amount,
         type
+
     };
+
 
     if(editIndex === -1){
 
         transactions.push(transaction);
 
-    }else{
+    }
+    else{
 
         transactions[editIndex] =
         transaction;
@@ -80,29 +88,38 @@ function addTransaction() {
 
         addBtn.textContent =
         "Add Transaction";
+
     }
+
 
     saveData();
 
     updateUI();
 
+
     titleInput.value = "";
+
     amountInput.value = "";
+
 }
+
 
 function deleteTransaction(index){
 
-    transactions.splice(index,1);
+    transactions.splice(index, 1);
 
     saveData();
 
     updateUI();
+
 }
+
 
 function editTransaction(index){
 
     const item =
     transactions[index];
+
 
     titleInput.value =
     item.title;
@@ -113,19 +130,46 @@ function editTransaction(index){
     typeInput.value =
     item.type;
 
+
     editIndex =
     index;
 
+
     addBtn.textContent =
     "Update Transaction";
+
 }
+
 
 function updateUI(){
 
     transactionList.innerHTML = "";
 
+
+    // Calculate overall income and expense
+
     let income = 0;
+
     let expense = 0;
+
+
+    transactions.forEach((item) => {
+
+        if(item.type === "Income"){
+
+            income += item.amount;
+
+        }
+        else{
+
+            expense += item.amount;
+
+        }
+
+    });
+
+
+    // Get search and filter values
 
     let searchText =
     searchInput.value.toLowerCase();
@@ -133,38 +177,47 @@ function updateUI(){
     let filterValue =
     filterInput.value;
 
-    transactions.forEach((item,index)=>{
+
+    // Display transactions
+
+    transactions.forEach((item, index) => {
+
+
+        // Search filter
 
         if(
             !item.title
             .toLowerCase()
             .includes(searchText)
         ){
+
             return;
+
         }
+
+
+        // Type filter
 
         if(
             filterValue !== "All" &&
             item.type !== filterValue
         ){
+
             return;
+
         }
 
-        if(item.type === "Income"){
-            income += item.amount;
-        }else{
-            expense += item.amount;
-        }
 
         const li =
         document.createElement("li");
+
 
         li.innerHTML = `
 
         <div>
 
             <strong>
-            ${item.title}
+                ${item.title}
             </strong>
 
             <br>
@@ -174,55 +227,69 @@ function updateUI(){
 
         </div>
 
+
         <div class="action-buttons">
 
             <button
             class="edit-btn"
             onclick="editTransaction(${index})">
 
-            Edit
+                Edit
 
             </button>
+
 
             <button
             class="delete-btn"
             onclick="deleteTransaction(${index})">
 
-            Delete
+                Delete
 
             </button>
 
         </div>
+
         `;
+
 
         transactionList.appendChild(li);
 
     });
 
+
+    // Display overall totals
+
     incomeEl.textContent =
     "₹" + income;
+
 
     expenseEl.textContent =
     "₹" + expense;
 
+
     balanceEl.textContent =
     "₹" + (income - expense);
+
 }
+
 
 addBtn.addEventListener(
     "click",
     addTransaction
 );
 
+
 searchInput.addEventListener(
     "input",
     updateUI
 );
 
+
 filterInput.addEventListener(
     "change",
     updateUI
 );
+
 
 themeBtn.addEventListener(
     "click",
@@ -234,5 +301,6 @@ themeBtn.addEventListener(
 
     }
 );
+
 
 updateUI();
