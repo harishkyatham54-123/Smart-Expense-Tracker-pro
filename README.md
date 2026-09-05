@@ -2,9 +2,9 @@
 
 ## 📌 Overview
 
-Smart Expense Tracker is a simple web application built using HTML, CSS, and JavaScript to help users record and manage their daily expenses.
+Smart Expense Tracker is a simple and responsive web application built using HTML, CSS, and JavaScript.
 
-Users can add expenses, view their expense details, and track their spending through a simple and user-friendly interface.
+It helps users record their daily expenses, view expense details, and track their total spending through an easy-to-use interface.
 
 ## 🚀 Features
 
@@ -24,7 +24,7 @@ Users can add expenses, view their expense details, and track their spending thr
 ## 📂 Project Structure
 
 ```text
-Smart-Expense-Tracker-pro/
+Smart-Expense-Tracker/
 │
 ├── index.html
 ├── style.css
